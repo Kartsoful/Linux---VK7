@@ -73,8 +73,9 @@ For more details, see the workflow file in `.github/workflows/deploy.yml`.
 
 
 ---------------
-Lisäksi luotava juureen /opt/lemp .env-tiedosto, ja sinne sisältö seuraavalla tapaa:
+Lisäksi luo juureen /opt/lemp .env-tiedosto, ja sinne sisältö seuraavalla tapaa:
 
+```env
 MYSQL_ROOT_PASSWORD=Strong_password
 DOCKERHUB_USERNAME=dockerhub_user_name
 DB_HOST=host
