@@ -83,11 +83,12 @@ DB_HOST=host
 DB_USER=user
 DB_PASSWORD=user_pass
 DB_NAME=db_name
-env```
+
 ---------------------
 
 Lisää nignx-konfigurointiin seuraava lohko:
 
+```nignx
 # WebSocket proxy cicd
 location /cicd {
     proxy_pass http://127.0.0.1:8001; # Korjaa tarvittaessa portti
