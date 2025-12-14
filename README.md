@@ -71,23 +71,28 @@ For more details, see the workflow file in `.github/workflows/deploy.yml`.
 # Linux---VK7
 # Linux---VK7
 
-Lisäksi luotava juureen /tmp .env-tiedosto, ja sinne sisältö seuraavalla tapaa
 
 ---------------
+Lisäksi luotava juureen /opt/lemp .env-tiedosto, ja sinne sisältö seuraavalla tapaa:
 
-
-# Yleensä kommentit alkavat ristikkomerkillä (#)
-#
-# MYSQL root -salasana
 MYSQL_ROOT_PASSWORD=Strong_password
-#
-# Dockerhub käyttäjänimi, jos käytät omia imageja
 DOCKERHUB_USERNAME=dockerhub_user_name
-#
-# Tietokantayhteyden tiedot sovellukselle
-DB_HOST=host # Tämä on usein palvelun nimi docker-compose.yml:ssä
+DB_HOST=host
 DB_USER=user
 DB_PASSWORD=user_pass
 DB_NAME=db_name
 
 ---------------------
+Lisää nignx-konfigurointiin seuraava lohko:
+
+    # WebSocket proxy cicd
+    location /cicd {
+        proxy_pass http://127.0.0.1:8001; # Korjaa tarvittaessa portti
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_read_timeout 86400;
+        proxy_send_timeout 86400;
+    }
+
