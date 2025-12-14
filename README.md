@@ -71,8 +71,7 @@ For more details, see the workflow file in `.github/workflows/deploy.yml`.
 # Linux---VK7
 # Linux---VK7
 
-
----------------------
+---
 
 Lisäksi luo juureen /opt/lemp .env-tiedosto, ja sinne sisältö seuraavalla tapaa:
 
@@ -83,8 +82,8 @@ DB_HOST=host
 DB_USER=user
 DB_PASSWORD=user_pass
 DB_NAME=db_name
-
----------------------
+```
+---
 
 Lisää nignx-konfigurointiin seuraava lohko:
 
@@ -99,5 +98,5 @@ location /cicd {
     proxy_read_timeout 86400;
     proxy_send_timeout 86400;
 }
-
----------------------
+```
+---
