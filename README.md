@@ -83,7 +83,7 @@ DB_HOST=host
 DB_USER=user
 DB_PASSWORD=user_pass
 DB_NAME=db_name
-
+env```
 ---------------------
 
 Lisää nignx-konfigurointiin seuraava lohko:
