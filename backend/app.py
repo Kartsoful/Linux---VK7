@@ -12,7 +12,7 @@ DB_NAME = os.getenv('DB_NAME', 'appdb')
 
 @app.get('/api/health')
 def health():
-    return jsonify(message={'status': 'ok'})
+    return jsonify({'status': 'ok'})
 
 @app.get('/api/time')
 def time():
@@ -28,7 +28,7 @@ def time():
     cur.execute("SELECT NOW()")
     row = cur.fetchone()
     cur.close(); conn.close()
-    return jsonify(message={'time': row[0]})
+    return jsonify({'message': {'time': str(row[0])}})
 
 @app.get('/api')
 def index():
@@ -43,7 +43,7 @@ def index():
     cur.execute("SELECT 'Hello from MySQL via Testi!'")
     row = cur.fetchone()
     cur.close(); conn.close()
-    return jsonify(message=row[0])
+    return jsonify({'message': row[0]})
 
 if __name__ == '__main__':
     # Dev-only fallback
