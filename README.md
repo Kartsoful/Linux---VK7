@@ -70,3 +70,24 @@ The GitHub Actions workflow (`.github/workflows/deploy.yml`) does the following:
 For more details, see the workflow file in `.github/workflows/deploy.yml`.
 # Linux---VK7
 # Linux---VK7
+
+Lisäksi luotava juureen /tmp .env-tiedosto, ja sinne sisältö seuraavalla tapaa
+
+---------------
+
+
+# Yleensä kommentit alkavat ristikkomerkillä (#)
+#
+# MYSQL root -salasana
+MYSQL_ROOT_PASSWORD=Strong_password
+#
+# Dockerhub käyttäjänimi, jos käytät omia imageja
+DOCKERHUB_USERNAME=dockerhub_user_name
+#
+# Tietokantayhteyden tiedot sovellukselle
+DB_HOST=host # Tämä on usein palvelun nimi docker-compose.yml:ssä
+DB_USER=user
+DB_PASSWORD=user_pass
+DB_NAME=db_name
+
+---------------------
