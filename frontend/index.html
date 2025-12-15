@@ -6,58 +6,73 @@
 </head>
 <body>
   <h1>Frontend (Nginx) konteilla cicd</h1>
-  <div id="msg">Loading...</div>
-  <script>
-    fetch('/cicd/api')
-      .then(r => r.json())
-      .then(d => { document.getElementById('msg').innerText = d.message; })
-      .catch(e => { document.getElementById('msg').innerText = 'API error: ' + e; });
-  </script>
 
+  <!-- Health-status -->
+  <div>
+    <p>Backend status:</p>
+    <div id="health">Loading...</div>
+  </div>
+
+  <!-- Serverin tietokannan kellonaika -->
   <div>
     <p>Serverin tietokannan kellonaika:</p>
     <div id="time">Loading...</div>
   </div>
 
-  <script>
-  function updateServerTime() {
-    fetch('/cicd/api/time')
-      .then(r => r.json())
-      .then(d => {
-        document.getElementById('time').innerText = d.message.time;
-      })
-      .catch(e => {
-        document.getElementById('time').innerText = 'API error: ' + e;
-      });
-  }
-
-  // Päivitä heti ja sen jälkeen joka sekunti
-  updateServerTime();
-  setInterval(updateServerTime, 1000);
-  </script>
-
-  <div id="health">Checking health...</div>
-  <script>
-    fetch('/cicd/api/health')
-      .then(r => r.json())
-      .then(d => {
-        // d.message on dict, joten näytetään status
-        document.getElementById('health').innerText = 'Status: ' + d.message.status;
-      })
-      .catch(e => {
-        document.getElementById('health').innerText = 'Health API error: ' + e;
-      });
-  </script>
-
-  <div style="margin-top:20px;">
-  <p>Tästä napista pääset testiscriptiin:</p>
-  <a href="https://github.com/Kartsoful/Linux---VK7/blob/main/test_backend_cicd.sh" 
-     target="_blank"
-     style="display:inline-block; padding:10px 15px; background-color:#007BFF; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">
-    Testiscriptiin
-  </a>
+  <!-- Testi-skriptin linkki -->
+  <div>
+    <p>Tästä napista pääset testiscriptiin:</p>
+    <button onclick="window.open('https://github.com/Kartsoful/Linux---VK7/blob/main/test_backend_cicd.sh', '_blank')">
+      Testiscriptiin
+    </button>
   </div>
 
+  <!-- Sään haku -->
+  <div>
+    <input type="text" id="city" placeholder="Kirjoita kunta">
+    <button id="weather-btn">Hae lämpötila</button>
+    <div id="weather-result"></div>
+  </div>
 
+  <script>
+    // Backend health-status
+    function updateHealth() {
+      fetch('/cicd/api/health')
+        .then(r => r.json())
+        .then(d => { document.getElementById('health').innerText = d.message.status; })
+        .catch(e => { document.getElementById('health').innerText = 'API error: ' + e; });
+    }
+    updateHealth();
+    setInterval(updateHealth, 5000);
+
+    // Serverin tietokannan kellonaika
+    function updateServerTime() {
+      fetch('/cicd/api/time')
+        .then(r => r.json())
+        .then(d => {
+          if (d.message && d.message.time) {
+            document.getElementById('time').innerText = d.message.time;
+          } else {
+            document.getElementById('time').innerText = 'Virhe JSON:ssa';
+          }
+        })
+        .catch(e => { document.getElementById('time').innerText = 'API error: ' + e; });
+    }
+    updateServerTime();
+    setInterval(updateServerTime, 1000);
+
+    // Sään haku nappi
+    document.getElementById('weather-btn').addEventListener('click', () => {
+      const city = document.getElementById('city').value.trim();
+      if (!city) {
+        document.getElementById('weather-result').innerText = "Anna kunta.";
+        return;
+      }
+      fetch(`/cicd/api/weather?city=${encodeURIComponent(city)}`)
+        .then(r => r.json())
+        .then(d => { document.getElementById('weather-result').innerText = d.message; })
+        .catch(e => { document.getElementById('weather-result').innerText = 'API error: ' + e; });
+    });
+  </script>
 </body>
 </html>
