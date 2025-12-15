@@ -38,7 +38,7 @@ def index():
         database=DB_NAME,
     )
     cur = conn.cursor()
-    cur.execute("SELECT 'Hello from MySQL via Testi!'")
+    cur.execute("SELECT 'Morjes backendin tietokannasta!'")
     row = cur.fetchone()
     cur.close(); conn.close()
     return jsonify(message=row[0])
