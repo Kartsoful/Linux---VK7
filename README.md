@@ -1,3 +1,49 @@
+Linkki harjoitukseen: http://86.50.20.94/
+
+Harjoituksen takaa löytyvät myös VK5 sekä VK6 harjoitukset. Näiden toiminta voi olla epävakaata.
+
+---
+
+# Lisätoiminnot CI/CD-kontin toiminnan varmistamiseksi
+
+---
+
+Lisäksi luo juureen /opt/lemp .env-tiedosto, ja sinne sisältö seuraavalla tapaa:
+
+```env
+MYSQL_ROOT_PASSWORD=Strong_password
+DOCKERHUB_USERNAME=dockerhub_user_name
+DB_HOST=host
+DB_USER=user
+DB_PASSWORD=user_pass
+DB_NAME=db_name
+OWM_API_KEY=API_KEY_FROM_OPENWEATHERMAP
+```
+---
+
+Lisää nignx-konfigurointiin seuraava lohko:
+
+```nignx
+# WebSocket proxy cicd
+    location /cicd/ {
+        proxy_pass http://127.0.0.1:8001/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # WebSocket timeout
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
+
+```
+---
+
 # LEMP Containers CI/CD with GitHub Actions
 
 This project uses GitHub Actions for CI/CD, including Docker image build, push, and remote deployment via SSH.
@@ -69,34 +115,5 @@ The GitHub Actions workflow (`.github/workflows/deploy.yml`) does the following:
 
 For more details, see the workflow file in `.github/workflows/deploy.yml`.
 # Linux---VK7
-# Linux---VK7
 
----
 
-Lisäksi luo juureen /opt/lemp .env-tiedosto, ja sinne sisältö seuraavalla tapaa:
-
-```env
-MYSQL_ROOT_PASSWORD=Strong_password
-DOCKERHUB_USERNAME=dockerhub_user_name
-DB_HOST=host
-DB_USER=user
-DB_PASSWORD=user_pass
-DB_NAME=db_name
-```
----
-
-Lisää nignx-konfigurointiin seuraava lohko:
-
-```nignx
-# WebSocket proxy cicd
-location /cicd {
-    proxy_pass http://127.0.0.1:8001; # Korjaa tarvittaessa portti
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-    proxy_set_header Host $host;
-    proxy_read_timeout 86400;
-    proxy_send_timeout 86400;
-}
-```
----
