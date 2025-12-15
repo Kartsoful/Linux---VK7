@@ -22,5 +22,19 @@
       .catch(e => { document.getElementById('time').innerText = 'API error: ' + e; });
   </script>
 
+  <div id="health">Checking health...</div>
+  <script>
+    fetch('/cicd/api/health')
+      .then(r => r.json())
+      .then(d => {
+        // d.message on dict, joten näytetään status
+        document.getElementById('health').innerText = 'Status: ' + d.message.status;
+      })
+      .catch(e => {
+        document.getElementById('health').innerText = 'Health API error: ' + e;
+      });
+  </script>
+
+
 </body>
 </html>

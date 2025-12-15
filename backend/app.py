@@ -16,8 +16,6 @@ def health():
 
 @app.get('/api/time')
 def time():
-    # Placeholder for actual time fetching logic
-    #get server time from db
     conn = mysql.connector.connect(
         host=DB_HOST,
         user=DB_USER,
@@ -28,7 +26,7 @@ def time():
     cur.execute("SELECT NOW()")
     row = cur.fetchone()
     cur.close(); conn.close()
-    return jsonify(message={'time': row[0]})
+    return jsonify(time=row[0])
 
 @app.get('/api')
 def index():
