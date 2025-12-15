@@ -22,7 +22,7 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
-
+      OWM_API_KEY: ${OWM_API_KEY}
     networks:
       - backend_frontend_net
     depends_on:
