@@ -66,7 +66,7 @@ def get_weather():
         return jsonify(message=f"Kuntaa '{city}' ei löydy API-rajapinnan takaa"), 404
 
     temp = data['main']['temp']
-    return jsonify(message=f"{city}-kunnan lämpötila on {temp} °C")
+    return jsonify(message=f"{city}: Lämpötila on tällä hetkellä {temp} °C")
 
 
 if __name__ == '__main__':
