@@ -53,13 +53,19 @@ def get_weather():
 
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&units=metric&appid={OWM_API_KEY}"
     resp = requests.get(url)
-    
-    if resp.status_code != 200:
+
+    try:
+        data = resp.json()
+    except Exception as e:
+        return jsonify(message=f"Virhe API:sta: {e}"), 500
+
+    # Tarkistetaan OpenWeatherMapin cod
+    if data.get('cod') != 200:
         return jsonify(message=f"Kuntaa '{city}' ei löydy API-rajapinnan takaa"), 404
 
-    data = resp.json()
     temp = data['main']['temp']
     return jsonify(message=f"{city}-kunnan lämpötila on {temp} °C")
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
