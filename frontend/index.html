@@ -35,46 +35,15 @@
       });
   </script>
 
-  <div>
-    <button id="test-backend">Testaa backend</button>
-    <div id="test-result">Ei testattu vielä</div>
+  <div style="margin-top:20px;">
+  <p>Tästä napista pääset testiscriptiin:</p>
+  <a href="https://github.com/Kartsoful/Linux---VK7/blob/main/test_backend_cicd.sh" 
+     target="_blank"
+     style="display:inline-block; padding:10px 15px; background-color:#007BFF; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">
+    Testiscriptiin
+  </a>
   </div>
 
-  <script>
-  let lastTestTime = null;
-
-  function runBackendTest() {
-    document.getElementById('test-result').innerText = "Testataan...";
-    lastTestTime = Date.now();
-
-    fetch('/cicd/api/health')
-      .then(r => r.json())
-      .then(d => {
-        if(d.message && d.message.status === "ok") {
-          document.getElementById('test-result').innerText = "Backend OK ✅";
-        } else {
-          document.getElementById('test-result').innerText = "Backend vastasi odottamattomasti ❌";
-        }
-      })
-      .catch(e => {
-        document.getElementById('test-result').innerText = "Backend test FAILED ❌: " + e;
-      });
-  }
-
-  // Napin klikki
-  document.getElementById('test-backend').addEventListener('click', runBackendTest);
-
-  // Interval, joka tarkistaa viime testin ajan joka sekunti
-  setInterval(() => {
-    if(lastTestTime) {
-      const now = Date.now();
-      if(now - lastTestTime > 5000) { // yli 5 sekuntia
-        document.getElementById('test-result').innerText = "Viime testistä yli 5 sekuntia. Testaa uudelleen varmistaaksesi toiminta";
-        lastTestTime = null; // reset, jotta viesti ei jää päälle
-      }
-    }
-  }, 1000);
-  </script>
 
 </body>
 </html>
