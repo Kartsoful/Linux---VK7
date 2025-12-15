@@ -10,7 +10,9 @@ DB_HOST = os.getenv('DB_HOST', 'db')
 DB_USER = os.getenv('DB_USER', 'appuser')
 DB_PASSWORD = os.getenv('DB_PASSWORD', 'changeme')
 DB_NAME = os.getenv('DB_NAME', 'appdb')
-OWM_API_KEY = os.getenv('OWM_API_KEY')  # OpenWeatherMap API key
+OWM_API_KEY = os.getenv("OWM_API_KEY")
+if not OWM_API_KEY:
+    print("VAROITUS: OWM_API_KEY ei ole asetettu!")
 
 @app.get('/api/health')
 def health():
