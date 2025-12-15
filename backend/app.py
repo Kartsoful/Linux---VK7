@@ -63,7 +63,7 @@ def get_weather():
 
     # Tarkistetaan OpenWeatherMapin cod
     if data.get('cod') != 200:
-        return jsonify(message=f"Kuntaa '{city}' ei löydy API-rajapinnan takaa"), 404
+        return jsonify(message=f"Paikkaa '{city}' ei löydy API-rajapinnan takaa. Kokeile esim. Helsinki, Rooma tai Dubai"), 404
 
     temp = data['main']['temp']
     return jsonify(message=f"{city}: Lämpötila on tällä hetkellä {temp} °C")
