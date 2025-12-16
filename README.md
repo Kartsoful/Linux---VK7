@@ -13,10 +13,10 @@ Lisäksi luo juureen /opt/lemp .env-tiedosto, ja sinne sisältö seuraavalla tap
 ```env
 MYSQL_ROOT_PASSWORD=Strong_password
 DOCKERHUB_USERNAME=dockerhub_user_name
-DB_HOST=host
-DB_USER=user
-DB_PASSWORD=user_pass
-DB_NAME=db_name
+DB_HOST=db
+DB_USER=appuser
+DB_PASSWORD=changeme
+DB_NAME=appdb
 OWM_API_KEY=API_KEY_FROM_OPENWEATHERMAP
 ```
 ---
